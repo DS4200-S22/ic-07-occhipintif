@@ -17,6 +17,8 @@ const yTooltipOffset = 15;
 
 
 // TODO: What does this code do? 
+// it finds the element with the given id 
+// and adds an svg to it
 const svg1 = d3
   .select("#hard-coded-bar")
   .append("svg")
@@ -75,6 +77,7 @@ svg1.append("g")
 */
 
 // TODO: What does each line of this code do? 
+// select the hard-coded bar and append another div
 const tooltip1 = d3.select("#hard-coded-bar") 
                 .append("div") 
                 .attr('id', "tooltip1") 
@@ -82,18 +85,21 @@ const tooltip1 = d3.select("#hard-coded-bar")
                 .attr("class", "tooltip"); 
 
 // TODO: What does each line of this code do?  
+// sets opacity of tooltip 1 to 1
 const mouseover1 = function(event, d) {
   tooltip1.html("Name: " + d.name + "<br> Score: " + d.score + "<br>") 
           .style("opacity", 1);  
 }
 
 // TODO: What does each line of this code do? 
+// changes position of tooltip 1
 const mousemove1 = function(event, d) {
   tooltip1.style("left", (event.x)+"px") 
           .style("top", (event.y + yTooltipOffset) +"px"); 
 }
 
 // TODO: What does this code do? 
+// sets opacity of tooltip 1 back to 0
 const mouseleave1 = function(event, d) { 
   tooltip1.style("opacity", 0); 
 }
@@ -105,6 +111,8 @@ const mouseleave1 = function(event, d) {
 */
 
 // TODO: What does each line of this code do? 
+// selects the chart, binds the data to it, and makes a 
+// rectangle for each row in data1, and adds mose events
 svg1.selectAll(".bar") 
    .data(data1) 
    .enter()  
