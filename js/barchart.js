@@ -219,16 +219,3 @@ svg2.selectAll(".bar")
      .on("mouseleave", mouseleave2);
       }
     });
-
-/* 
-
-  Tooltip Set-up  
-
-*/
-
-
-/* 
-
-  Bars 
-
-*/
