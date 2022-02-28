@@ -94,8 +94,8 @@ const mouseover1 = function(event, d) {
 // TODO: What does each line of this code do? 
 // changes position of tooltip 1
 const mousemove1 = function(event, d) {
-  tooltip1.style("left", (event.x)+"px") 
-          .style("top", (event.y + yTooltipOffset) +"px"); 
+  tooltip1.style("left", (event.pageX)+"px") 
+          .style("top", (event.pageY + yTooltipOffset) +"px"); 
 }
 
 // TODO: What does this code do? 
@@ -131,5 +131,104 @@ svg1.selectAll(".bar")
 
 
 
+//------------------------------------------------------------------
+//------------------------------------------------------------------
+//bar 2
+const svg2 = d3
+  .select("#csv-bar")
+  .append("svg")
+  .attr("width", width-margin.left-margin.right)
+  .attr("height", height - margin.top - margin.bottom)
+  .attr("viewBox", [0, 0, width, height]);
+
+d3.csv("data/barchart.csv").then((data2) => {
+  
+  let x1, y1, x2, y2, x3, y3;  
+
+  let xKey1, yKey1, xKey2, yKey2, xKey3, yKey3;
+
+  {
+    let xKey1 = "name";
+    let yKey1 = "score";
+
+    // Find max x
+    let maxX1 = d3.max(data2, (d) => { return d[xKey1]; });
+
+    maxY1 = d3.max(data2, function(d) { return d.score; });
+
+    // Create X scale
+    let x1 = d3.scaleLinear()
+                .domain([0,maxX1])
+                .range([margin.left, width-margin.right]); 
+
+    yScale1 = d3.scaleLinear()
+            .domain([0,maxY1])
+            .range([height-margin.bottom,margin.top]); 
+
+    xScale1 = d3.scaleBand()
+            .domain(d3.range(data2.length))
+            .range([margin.left, width - margin.right])
+            .padding(0.1); 
+
+    svg2.append("g")
+            .attr("transform", `translate(${margin.left}, 0)`) 
+            .call(d3.axisLeft(yScale1)) 
+            .attr("font-size", '20px'); 
+
+    svg2.append("g")
+            .attr("transform", `translate(0,${height - margin.bottom})`) 
+            .call(d3.axisBottom(xScale1) 
+            .tickFormat(i => data2[i].name))  
+            .attr("font-size", '20px');
+
+            const tooltip2 = d3.select("#csv-bar") 
+                .append("div") 
+                .attr('id', "tooltip2") 
+                .style("opacity", 0) 
+                .attr("class", "tooltip"); 
+
+const mouseover2 = function(event, d) {
+  tooltip2.html("Name: " + d.name + "<br> Score: " + d.score + "<br>") 
+          .style("opacity", 1);  
+}
+
+// TODO: What does each line of this code do? 
+// changes position of tooltip 1
+const mousemove2 = function(event, d) {
+  tooltip2.style("left", (event.pageX)+"px") 
+          .style("top", (event.pageY + yTooltipOffset) +"px"); 
+}
+
+// TODO: What does this code do? 
+// sets opacity of tooltip 1 back to 0
+const mouseleave2 = function(event, d) { 
+  tooltip2.style("opacity", 0); 
+}
+
+svg2.selectAll(".bar") 
+   .data(data2) 
+   .enter()  
+   .append("rect") 
+     .attr("class", "bar") 
+     .attr("x", (d,i) => xScale1(i)) 
+     .attr("y", (d) => yScale1(d.score)) 
+     .attr("height", (d) => (height - margin.bottom) - yScale1(d.score)) 
+     .attr("width", xScale1.bandwidth()) 
+     .on("mouseover", mouseover2) 
+     .on("mousemove", mousemove2)
+     .on("mouseleave", mouseleave2);
+      }
+    });
+
+/* 
+
+  Tooltip Set-up  
+
+*/
 
 
+/* 
+
+  Bars 
+
+*/
